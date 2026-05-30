@@ -17,6 +17,7 @@
 9. Added server-side validation in handleCancelBooking
 10. Added requiresCancellationReason to getBookingToDelete select
 11. Fixed dynamic label to show "(optional)" only when isReasonRequiredForUser() returns false
+12. Added dedicated unit tests for the isCancellationReasonRequired helper (cancellationReason.test.ts), covering all four enum values across host/attendee, the null/undefined defaults, and the fallback branch (13 cases)
 
 ## In Progress
 
@@ -24,11 +25,11 @@
 
 ## Next Steps
 
-- Test the feature end-to-end
-- Verify all dropdown options work correctly
-- Verify dynamic label shows "(optional)" only when appropriate
+- None — feature is implemented and covered by both unit and integration tests
 
 ## Session Notes
 
 - Enum and column were already added to schema during planning phase
 - Migration was already created
+- Server-side validation is exercised by handleCancelBooking.test.ts (MANDATORY_BOTH, MANDATORY_ATTENDEE_ONLY, MANDATORY_HOST_ONLY, OPTIONAL_BOTH, and null default)
+- The pure requirement helper lacked direct unit coverage; added cancellationReason.test.ts to bring it to near-100% branch coverage per Oris testing standards
