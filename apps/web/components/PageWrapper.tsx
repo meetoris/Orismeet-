@@ -70,7 +70,7 @@ function PageWrapper(props: AppProps) {
         />
       </Head>
       <DefaultSeo
-        // Set canonical to https://cal.com or self-hosted URL
+        // Set canonical to https://orismeet.com or self-hosted URL
         canonical={
           IS_CALCOM
             ? buildCanonical({ path, origin: getCalcomUrl() }) // cal.com & .dev

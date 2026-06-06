@@ -342,7 +342,7 @@ export class Cal {
 
     // cal.com has rewrite issues on Safari that sometimes cause 404 for assets.
     const originToUse = (calOrigin || calConfig.calOrigin || "").replace(
-      "https://cal.com",
+      "https://orismeet.com",
       "https://app.cal.com"
     );
 

@@ -1,7 +1,7 @@
 {
-    "name": "Cal.diy",
-    "short_name": "Cal.diy",
-    "description": "Scheduling infrastructure for absolutely everyone.",
+    "name": "Oris Meet",
+    "short_name": "Oris Meet",
+    "description": "Smart scheduling for teams and individuals — book meetings without the back-and-forth.",
     "icons": [
         {
             "src": "/api/logo?type=android-chrome-192",

@@ -236,7 +236,9 @@ const nextConfig = (phase: string): NextConfig => {
     experimental: {
       optimizePackageImports: ["@calcom/ui"],
     },
-    productionBrowserSourceMaps: true,
+    // Disabled to avoid publishing full source to the public CDN. Sentry uploads
+    // hidden source maps privately during the build (yarn sentry:release).
+    productionBrowserSourceMaps: false,
     transpilePackages: [
       "@calcom/app-store",
       "@calcom/dayjs",
@@ -409,6 +411,14 @@ const nextConfig = (phase: string): NextConfig => {
             {
               key: "Referrer-Policy",
               value: "strict-origin-when-cross-origin",
+            },
+            // HSTS is only honored by browsers over HTTPS, so it is inert on local
+            // http dev and does not affect embeds or Cal Video (which need framing /
+            // camera+mic and must NOT have X-Frame-Options or a restrictive
+            // Permissions-Policy applied globally).
+            {
+              key: "Strict-Transport-Security",
+              value: "max-age=63072000; includeSubDomains; preload",
             },
           ],
         },

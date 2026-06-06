@@ -42,6 +42,8 @@ export const viewport = {
 };
 
 export const metadata = {
+  title: { default: "Oris Meet" },
+  description: "Smart scheduling for teams and individuals — book meetings without the back-and-forth.",
   icons: {
     icon: "/api/logo?type=favicon-32",
     apple: "/api/logo?type=apple-touch-icon",
@@ -65,11 +67,11 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   other: {
-    "application-TileColor": "#ff0000",
+    "application-TileColor": "#111827",
   },
   twitter: {
-    site: "@calcom",
-    creator: "@calcom",
+    site: "@orismeet",
+    creator: "@orismeet",
     card: "summary_large_image",
   },
   robots: {

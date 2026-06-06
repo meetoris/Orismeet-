@@ -138,7 +138,7 @@ export default function WebhookListItem(props: {
                       render={
                         <a
                           className="relative flex h-5 items-center justify-center px-2 sm:h-4.5"
-                          href={`https://cal.com/docs/developing/guides/automation/webhooks#${webhook.version}`}
+                          href={`https://orismeet.com/docs/developing/guides/automation/webhooks#${webhook.version}`}
                           rel="noopener noreferrer"
                           target="_blank"
                         />

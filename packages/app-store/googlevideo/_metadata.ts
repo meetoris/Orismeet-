@@ -15,9 +15,9 @@ export const metadata = {
   variant: "conferencing",
   logo: "logo.webp",
   publisher: "Cal.diy",
-  url: "https://cal.com/",
+  url: "https://orismeet.com/",
   isGlobal: false,
-  email: "help@cal.com",
+  email: "support@orismeet.com",
   appData: {
     location: {
       linkType: "dynamic",

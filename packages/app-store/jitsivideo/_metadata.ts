@@ -14,7 +14,7 @@ export const metadata = {
   slug: "jitsi",
   title: "Jitsi Meet",
   isGlobal: false,
-  email: "help@cal.com",
+  email: "support@orismeet.com",
   appData: {
     location: {
       linkType: "dynamic",

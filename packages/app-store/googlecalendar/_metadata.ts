@@ -15,8 +15,8 @@ export const metadata = {
   logo: "icon.svg",
   publisher: "Cal.diy",
   slug: "google-calendar",
-  url: "https://cal.com/",
-  email: "help@cal.com",
+  url: "https://orismeet.com/",
+  email: "support@orismeet.com",
   dirName: "googlecalendar",
   isOAuth: true,
   delegationCredential: {

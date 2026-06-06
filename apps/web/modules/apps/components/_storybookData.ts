@@ -13,8 +13,8 @@ export const _SBApps: App[] = [
     logo: "/api/app-store/googlecalendar/icon.svg",
     publisher: "Cal.diy",
     slug: "google-calendar",
-    url: "https://cal.com/",
-    email: "help@cal.com",
+    url: "https://orismeet.com/",
+    email: "support@orismeet.com",
     dirName: "googlecalendar",
   },
   {
@@ -29,7 +29,7 @@ export const _SBApps: App[] = [
     category: "video",
     slug: "zoom",
     title: "Zoom Video",
-    email: "help@cal.com",
+    email: "support@orismeet.com",
     appData: {
       location: {
         default: false,

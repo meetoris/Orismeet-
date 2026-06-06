@@ -40,8 +40,16 @@ export const bootstrap = (app: NestExpressApplication): NestExpressApplication =
       defaultVersion: VERSION_2024_04_15,
     });
     app.use(helmet());
+    // Public platform API: clients call it from their own domains (embeds, atoms SDK)
+    // and authenticate via API keys / OAuth tokens in headers (NOT cookies — note
+    // `credentials` is intentionally not enabled). In production set
+    // API_CORS_ALLOWED_ORIGINS to a comma-separated allowlist to restrict origins;
+    // when unset it falls back to "*" to preserve open public-API behaviour.
+    const allowedOrigins = process.env.API_CORS_ALLOWED_ORIGINS?.split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean);
     app.enableCors({
-      origin: "*",
+      origin: allowedOrigins && allowedOrigins.length > 0 ? allowedOrigins : "*",
       methods: ["GET", "PATCH", "DELETE", "HEAD", "POST", "PUT", "OPTIONS"],
       allowedHeaders: [
         X_CAL_CLIENT_ID,

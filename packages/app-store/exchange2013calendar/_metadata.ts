@@ -13,8 +13,8 @@ export const metadata = {
   logo: "icon.svg",
   publisher: "Cal.diy",
   slug: "exchange2013-calendar",
-  url: "https://cal.com/",
-  email: "help@cal.com",
+  url: "https://orismeet.com/",
+  email: "support@orismeet.com",
   dirName: "exchange2013calendar",
   isOAuth: false,
 } as AppMeta;

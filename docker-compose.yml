@@ -17,9 +17,10 @@ services:
     volumes:
       - database-data:/var/lib/postgresql
     environment:
-      - POSTGRES_USER=unicorn_user
-      - POSTGRES_PASSWORD=magical_password
-      - POSTGRES_DB=calendso
+      # Override these in production via .env. Never ship the demo defaults publicly.
+      - POSTGRES_USER=${POSTGRES_USER:-unicorn_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-magical_password}
+      - POSTGRES_DB=${POSTGRES_DB:-calendso}
     networks:
       - stack
 
@@ -117,14 +118,20 @@ services:
       - database
       - redis
 
-  # Optional use of Prisma Studio. In production, comment out or remove the section below to prevent unwanted access to your database.
+  # Optional Prisma Studio (database browser). Gated behind the "tools" profile so a
+  # plain `docker compose up` NEVER starts it or exposes port 5555. Start it on demand
+  # for local debugging only: `docker compose --profile tools up studio`.
+  # It also binds to 127.0.0.1 so it is never reachable from outside the host.
+  # NEVER run this in production.
   studio:
     image: calcom.docker.scarf.sh/calcom/cal.diy
     restart: always
+    profiles:
+      - tools
     networks:
       - stack
     ports:
-      - 5555:5555
+      - 127.0.0.1:5555:5555
     env_file: .env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}

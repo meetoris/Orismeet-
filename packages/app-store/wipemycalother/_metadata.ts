@@ -13,9 +13,9 @@ export const metadata = {
   slug: "wipe-my-cal",
   title: "Wipe my cal",
   type: "wipemycal_other",
-  url: "https://cal.com/apps/wipe-my-cal",
+  url: "https://orismeet.com/apps/wipe-my-cal",
   variant: "other",
-  email: "help@cal.com",
+  email: "support@orismeet.com",
   dirName: "wipemycalother",
   isOAuth: false,
 } as AppMeta;

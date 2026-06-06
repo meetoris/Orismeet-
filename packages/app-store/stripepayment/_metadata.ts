@@ -17,11 +17,11 @@ export const metadata = {
   publisher: "Cal.diy",
   title: "Stripe",
   type: "stripe_payment",
-  url: "https://cal.com/",
+  url: "https://orismeet.com/",
   docsUrl: "https://stripe.com/docs",
   variant: "payment",
   extendsFeature: "EventType",
-  email: "help@cal.com",
+  email: "support@orismeet.com",
   dirName: "stripepayment",
   isOAuth: true,
 } as AppMeta;

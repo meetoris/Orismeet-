@@ -13,8 +13,8 @@ export const metadata = {
   publisher: "Cal.diy",
   slug: "office365-calendar",
   dirName: "office365calendar",
-  url: "https://cal.com/",
-  email: "help@cal.com",
+  url: "https://orismeet.com/",
+  email: "support@orismeet.com",
   isOAuth: true,
 } as AppMeta;
 
