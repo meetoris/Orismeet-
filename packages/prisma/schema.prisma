@@ -292,6 +292,11 @@ model EventType {
 
   // @@partial_index([instantMeetingScheduleId])
 
+  selectedSlots        SelectedSlots[]
+  watchlistEventAudits WatchlistEventAudit[]
+  inboundAgents        Agent[]               @relation("Agent_inboundEventType")
+  outboundAgents       Agent[]               @relation("Agent_outboundEventType")
+
   @@unique([userId, slug])
   @@unique([teamId, slug])
   @@unique([userId, parentId])
@@ -510,6 +515,13 @@ model User {
 
   autoOptInFeatures Boolean @default(false)
 
+  defaultSchedule      Schedule?        @relation("User_defaultSchedule", fields: [defaultScheduleId], references: [id])
+  selectedSlots        SelectedSlots[]
+  calendarCaches       CalendarCache[]
+  watchlistAudits      WatchlistAudit[]
+  seatChangeLogs       SeatChangeLog[]  @relation("SeatChangeLog_user")
+  seatChangesTriggered SeatChangeLog[]  @relation("SeatChangeLog_triggeredBy")
+
   @@unique([email])
   @@unique([email, username])
   @@unique([username, organizationId])
@@ -644,6 +656,9 @@ model Team {
   // Monthly proration tracking
   seatChangeLogs    SeatChangeLog[]
   monthlyProrations MonthlyProration[]
+
+  dSyncTeamGroupMappingsAsOrg DSyncTeamGroupMapping[] @relation("DSyncTeamGroupMapping_organization")
+  watchlists                  Watchlist[]
 
   @@unique([slug, parentId])
   @@index([parentId])
@@ -953,6 +968,8 @@ model Schedule {
   timeZone             String?
   availability         Availability[]
   Host                 Host[]
+
+  usersWithThisAsDefault User[] @relation("User_defaultSchedule")
 
   @@index([userId])
 }
@@ -1277,6 +1294,8 @@ model App {
   ApiKey      ApiKey[]
   enabled     Boolean         @default(false)
 
+  webhookScheduledTriggers WebhookScheduledTriggers[]
+
   @@index([enabled])
 }
 
@@ -1325,6 +1344,8 @@ model WebhookScheduledTriggers {
   booking       Booking?  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
   // @@partial_index([bookingId])
+
+  app App? @relation(fields: [appId], references: [slug])
 }
 
 model BookingSeat {
@@ -1443,6 +1464,9 @@ model SelectedSlots {
   uid              String
   releaseAt        DateTime
   isSeat           Boolean  @default(false)
+
+  eventType EventType @relation(fields: [eventTypeId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
 
   @@unique(fields: [userId, slotUtcStartDate, slotUtcEndDate, uid], name: "selectedSlotUnique")
 }
@@ -1604,6 +1628,8 @@ model CalendarCache {
   credentialId Int
   userId       Int?
   credential   Credential? @relation(fields: [credentialId], references: [id], onDelete: Cascade)
+
+  user User? @relation(fields: [userId], references: [id])
 
   @@id([credentialId, key])
   @@unique([credentialId, key])
@@ -1802,6 +1828,8 @@ model DSyncTeamGroupMapping {
   directoryId    String
   directory      DSyncData @relation(fields: [directoryId], references: [directoryId], onDelete: Cascade)
   groupName      String
+
+  organization Team @relation("DSyncTeamGroupMapping_organization", fields: [organizationId], references: [id])
 
   @@unique([teamId, groupName])
 }
@@ -2091,6 +2119,9 @@ model Watchlist {
   globalBookingReports BookingReport[]  @relation("GlobalBlocklist")
   audits               WatchlistAudit[]
 
+  team                 Team?                 @relation(fields: [organizationId], references: [id])
+  watchlistEventAudits WatchlistEventAudit[]
+
   @@unique([type, value, organizationId])
   @@index([isGlobal, action, organizationId, type, value])
 }
@@ -2109,6 +2140,8 @@ model WatchlistAudit {
   watchlistId String?    @db.Uuid
   watchlist   Watchlist? @relation(fields: [watchlistId], references: [id], onDelete: SetNull)
 
+  user User? @relation(fields: [changedByUserId], references: [id])
+
   @@index([watchlistId, changedAt])
 }
 
@@ -2118,6 +2151,9 @@ model WatchlistEventAudit {
   eventTypeId Int
   actionTaken WatchlistAction
   timestamp   DateTime        @default(now())
+
+  watchlist Watchlist @relation(fields: [watchlistId], references: [id])
+  eventType EventType @relation(fields: [eventTypeId], references: [id])
 }
 
 enum BookingReportReason {
@@ -2564,6 +2600,9 @@ model Agent {
   inboundPhoneNumbers  CalAiPhoneNumber[] @relation("InboundAgent")
   outboundPhoneNumbers CalAiPhoneNumber[] @relation("OutboundAgent")
 
+  inboundEventType  EventType? @relation("Agent_inboundEventType", fields: [inboundEventTypeId], references: [id])
+  outboundEventType EventType? @relation("Agent_outboundEventType", fields: [outboundEventTypeId], references: [id])
+
   @@index([userId])
   @@index([teamId])
   @@index([inboundEventTypeId])
@@ -2688,6 +2727,9 @@ model SeatChangeLog {
   teamBilling           TeamBilling?         @relation(fields: [teamBillingId], references: [id])
   organizationBillingId String?
   organizationBilling   OrganizationBilling? @relation(fields: [organizationBillingId], references: [id])
+
+  user            User? @relation("SeatChangeLog_user", fields: [userId], references: [id])
+  triggeredByUser User? @relation("SeatChangeLog_triggeredBy", fields: [triggeredBy], references: [id])
 
   @@unique([teamId, operationId])
   @@index([teamId, monthKey])
